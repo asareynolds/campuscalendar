@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AlertToast
 import EventKit
 
 struct Event: Identifiable {
@@ -60,6 +61,8 @@ struct EventRow: View {
 
 struct CalendarView: View {
     var events: [Event]
+    @State private var showToast: Bool = false
+    @State private var showAddView: Bool = false
     
     private var groupedEvents: [Date: [Event]] {
         Dictionary(grouping: events) { $0.startDate.startOfDay }
@@ -104,8 +107,8 @@ struct CalendarView: View {
                                                 calEvent.startDate = event.startDate
                                                 calEvent.endDate = event.endDate
                                                 calEvent.notes = event.description
-                                                
-                                                try? store.save(calEvent, span: .thisEvent)
+                                                showToast = true
+//                                                try? store.save(calEvent, span: .thisEvent)
                                                 
                                             })
                                         } label: {
@@ -120,13 +123,19 @@ struct CalendarView: View {
                     }
                 }
             }
+            .toast(isPresenting: $showToast) {
+//                AlertToast(type: .systemImage("calendar.badge.checkmark", Color(uiColor: .label)), title: "Added to calendar", style: AlertToast.AlertStyle(backgroundStyle: .white))
+            }
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     Button("Add Class", systemImage: "calendar.badge.plus", action: {
-                        // to do
+                        showAddView = true
                     })
                 }
             }
+            .sheet(isPresented: $showAddView, content: {
+                CreateEventView()
+            })
         }
     }
 }

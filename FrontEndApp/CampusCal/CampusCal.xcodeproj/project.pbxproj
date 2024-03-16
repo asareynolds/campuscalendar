@@ -15,6 +15,7 @@
 		947882742BA61A9700BDB749 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947882732BA61A9700BDB749 /* AccountView.swift */; };
 		947882762BA61D6200BDB749 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947882752BA61D6200BDB749 /* CalendarView.swift */; };
 		947882792BA6265B00BDB749 /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 947882782BA6265B00BDB749 /* AlertToast */; };
+		C8C2002D2BA6474C0009BBB1 /* CreateEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C2002C2BA6474C0009BBB1 /* CreateEventView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +28,7 @@
 		947882732BA61A9700BDB749 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		947882752BA61D6200BDB749 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		9478827C2BA638B800BDB749 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		C8C2002C2BA6474C0009BBB1 /* CreateEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CreateEventView.swift; path = CampusCal/CreateEventView.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +67,7 @@
 				947882652BA6182600BDB749 /* ContentView.swift */,
 				947882732BA61A9700BDB749 /* AccountView.swift */,
 				947882752BA61D6200BDB749 /* CalendarView.swift */,
+				C8C2002C2BA6474C0009BBB1 /* CreateEventView.swift */,
 				947882672BA6182600BDB749 /* Item.swift */,
 				947882692BA6182700BDB749 /* Assets.xcassets */,
 				9478826B2BA6182700BDB749 /* Preview Content */,
@@ -159,6 +162,7 @@
 				947882762BA61D6200BDB749 /* CalendarView.swift in Sources */,
 				947882742BA61A9700BDB749 /* AccountView.swift in Sources */,
 				947882662BA6182600BDB749 /* ContentView.swift in Sources */,
+				C8C2002D2BA6474C0009BBB1 /* CreateEventView.swift in Sources */,
 				947882682BA6182600BDB749 /* Item.swift in Sources */,
 				947882642BA6182600BDB749 /* CampusCalApp.swift in Sources */,
 			);
