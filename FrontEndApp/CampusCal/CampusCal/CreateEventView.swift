@@ -13,22 +13,25 @@ struct CreateEventView: View {
         case startTime
         case endTime
         case description
+        case url
     }
     
     @State private var title: String = ""
-    @State private var time: String = ""
+    @State private var startTime: Date = Date()
+    @State private var endTime: Date = Date()
     @State private var description: String = ""
+    @State private var url: String = ""
     @FocusState private var focusedField: Field?
     var body: some View {
-        VStack{
+        VStack(spacing: 10){
             Text("Create Event")
-                .padding(.bottom, 10)
+                .padding(.bottom, 30)
                 .font(.system(size:50))
             
             VStack {
                 TextField(
                     "Event Title",
-                    text: $time
+                    text: $title
                 )
                 .disableAutocorrection(true)
                 .focused($focusedField, equals: .title)
@@ -38,6 +41,17 @@ struct CreateEventView: View {
                 .onAppear {
                     focusedField = .title
                 }
+                DatePicker(
+                    "Start Date",
+                    selection: $startTime,
+                    displayedComponents: [.date, .hourAndMinute]
+                )
+                DatePicker(
+                    "End Time",
+                    selection: $startTime,
+                    displayedComponents: [.hourAndMinute]
+                )
+                
                 TextField(
                     "Description",
                     text: $description
