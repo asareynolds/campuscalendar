@@ -27,9 +27,7 @@ const getPreferences = async(uuid) => {
     return new Promise(async(resolve, reject) => {
         if (await db.searchExists("users", "uuid", uuid)) {
             var user = await db.search("users", "uuid", uuid)
-            var preferences = JSON.parse(Buffer.from(user.preferences, 'base64').toString('utf-8'));
-
-            resolve(`{"result": "success","uuid": "${uuid}","preferences": "${preferences}"}`)
+            resolve(`{"result": "success","uuid": "${uuid}","preferences": "${user.preferences}"}`)
         } else {
             resolve(`{"result": "error","type": "User doesn't exist"}`);
         }
