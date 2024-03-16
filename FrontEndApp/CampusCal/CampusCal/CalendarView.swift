@@ -99,8 +99,11 @@ struct CalendarView: View {
                                     }
                                     .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                                         Button {
-                                            let store = EKEventStore()
-                                            store.requestWriteOnlyAccessToEvents(completion: { _,_ in
+                                            Task {
+                                                let store = EKEventStore()
+                                                guard try await store.requestWriteOnlyAccessToEvents() else {
+                                                    return
+                                                }
                                                 let calEvent = EKEvent(eventStore: store)
                                                 calEvent.calendar = store.defaultCalendarForNewEvents
                                                 calEvent.title = event.title
@@ -108,9 +111,7 @@ struct CalendarView: View {
                                                 calEvent.endDate = event.endDate
                                                 calEvent.notes = event.description
                                                 showToast = true
-//                                                try? store.save(calEvent, span: .thisEvent)
-                                                
-                                            })
+                                            }
                                         } label: {
                                             Label("Add", systemImage: "plus")
                                         }
@@ -124,7 +125,7 @@ struct CalendarView: View {
                 }
             }
             .toast(isPresenting: $showToast) {
-//                AlertToast(type: .systemImage("calendar.badge.checkmark", Color(uiColor: .label)), title: "Added to calendar", style: AlertToast.AlertStyle(backgroundStyle: .white))
+                AlertToast(type: .systemImage("calendar.badge.checkmark", Color(uiColor: .label)), title: "Added to calendar", style: .style(backgroundColor: Color(uiColor: .systemBackground)))
             }
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
