@@ -29,10 +29,11 @@ struct AccountView: View {
                 }
             }
             
-            VStack(spacing: 20) {
+            VStack(alignment: .center,spacing: 20) {
                 Text("Campus Calendar")
                     .font(.system(size:60))
                     .padding(.bottom, 70)
+                    .foregroundStyle(.white)
                     .bold()
                     .frame(maxWidth: 300)
                 
