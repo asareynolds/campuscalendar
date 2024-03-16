@@ -48,10 +48,33 @@ const downvote = async(uuid) => {
         }
     });
 }
+const getAll = async() => {
+    return new Promise(async(resolve, reject) => {
+        var events = await db.search("events", "1", "1");
+        var parsedEvents = {};
+        for (var i = 0; i < events.length; i++) {
+            var event = events[i];
+            var parsedEvent = {
+                id: event.uuid,
+                title: event.title,
+                org: event.org,
+                description: event.description,
+                starttime: event.starttime,
+                endtime: event.endtime,
+                university: event.university,
+                url: event.url,
+                votes: event.votes
+            };
+            parsedEvents.push(parsedEvent);
+        }
+        resolve(parsedEvents);
+    });
+}
 
 module.exports = {
     create: create,
     getInfo: getInfo,
     upvote: upvote,
-    downvote: downvote
+    downvote: downvote,
+    getAll: getAll
 };

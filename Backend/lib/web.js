@@ -46,22 +46,30 @@ app.get('/user/preferences', async(req, res) => {
 });
 
 app.post('/organization/create', async(req, res) => { // App is sending post request: (JSON args) title, starttime, endtime, description, org, url
-    const { org_name, org_owner, org_description, org_starttime, org_endtime, org_org, org_url } = req.body
+    const { org_owner, org_name, org_description } = req.body
     res.setHeader('Content-Type', 'application/json');
 
-    var createOrganizationResult = JSON.parse(await organization.create(org_name, org_owner, org_description, org_starttime, org_endtime, org_org, org_url))
+    var createOrganizationResult = JSON.parse(await organization.create(org_owner, org_name, org_description))
     if (createOrganizationResult.result == "error") return res.end(`{"result": "error","type": "${createOrganizationResult.type}"}`);
 
     res.end(`{"result": "success","uuid": "${createOrganizationResult.uuid}"}`);
 });
-app.get('/organization/info', async(req, res) => {
+app.get('/organization/info', async(req, res) => { // App is sending get request: (URL args) OrganizationID
     const { org_uuid } = req.query
     res.setHeader('Content-Type', 'application/json');
 
     var getOrganizationResult = JSON.parse(await organization.getInfo(org_uuid))
     if (getOrganizationResult.result == "error") return res.end(`{"result": "error","type": "${getOrganizationResult.type}"}`);
 
-    res.end(`{"result": "success","uuid": "${org_uuid}","name": "${getOrganizationResult.name}","owner": "${getOrganizationResult.owner}","description": "${getOrganizationResult.description}","starttime": "${getOrganizationResult.starttime}","endtime": "${getOrganizationResult.endtime}","org": "${getOrganizationResult.org}","url": "${getOrganizationResult.url}"}`);
+    res.end(`{"result": "success","uuid": "${org_uuid}","owner": "${getOrganizationResult.owner}","name": "${getOrganizationResult.name}","description": "${getOrganizationResult.description}"}`);
+});
+app.get('/organizations', async(req, res) => { // List All Orgs
+    res.setHeader('Content-Type', 'application/json');
+
+    var getOrgsResult = JSON.parse(await organization.getOrgs())
+    if (getOrgsResult.result == "error") return res.end(`{"result": "error","type": "${getOrgsResult.type}"}`);
+
+    res.end(`{"result": "success","organizations": ${JSON.stringify(getOrgsResult)}}`);
 });
 
 app.post('/event/create', async(req, res) => {
@@ -101,9 +109,22 @@ app.get('/event/downvote', async(req, res) => { // App is sending post request: 
     res.end(`{"result": "success","votes": "${downvoteResult.votes}"}`);
 });
 app.get('/events', async(req, res) => { // App is sending get request: (URL args) UserID, Starttime, Endtime, Organization
+    const { user_uuid, event_starttime, event_endtime, event_org, taylored } = req.query
+    res.setHeader('Content-Type', 'application/json');
+
+    if (taylored) {
+        var getEventsResult = JSON.parse(await event.getTaylored(user_uuid, event_starttime, event_endtime, event_org))
+    } else {
+        var getEventsResult = JSON.parse(await event.getAll())
+    }
+    
+    if (getEventsResult.result == "error") return res.end(`{"result": "error","type": "${getEventsResult.type}"}`);
+
+    res.end(`{"result": "success","events": ${JSON.stringify(getEventsResult)}}`);
 }); // App is expecting: JSON array of events
 
 app.get('/universities', async(req, res) => {
+    res.end(`{"result": "success","universities": {"52b22807-b1bb-4bd1-86a7-f7b8de51f5c7": "The Pennsylvania State University"}}`);
 });
 
 app.post('/test', async(req, res) => {
