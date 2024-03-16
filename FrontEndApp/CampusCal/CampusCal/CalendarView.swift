@@ -108,7 +108,7 @@ struct CalendarView: View {
                                                 calEvent.endDate = event.endDate
                                                 calEvent.notes = event.description
                                                 showToast = true
-                                                try? store.save(calEvent, span: .thisEvent)
+//                                                try? store.save(calEvent, span: .thisEvent)
                                                 
                                             })
                                         } label: {
@@ -124,7 +124,7 @@ struct CalendarView: View {
                 }
             }
             .toast(isPresenting: $showToast) {
-                AlertToast(type: .systemImage("calendar.badge.checkmark", .white), title: "Added to calendar")
+//                AlertToast(type: .systemImage("calendar.badge.checkmark", Color(uiColor: .label)), title: "Added to calendar", style: AlertToast.AlertStyle(backgroundStyle: .white))
             }
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
