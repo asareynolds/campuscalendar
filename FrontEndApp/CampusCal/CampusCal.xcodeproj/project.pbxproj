@@ -26,6 +26,7 @@
 		9478826C2BA6182700BDB749 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		947882732BA61A9700BDB749 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		947882752BA61D6200BDB749 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		9478827C2BA638B800BDB749 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +60,7 @@
 		947882622BA6182600BDB749 /* CampusCal */ = {
 			isa = PBXGroup;
 			children = (
+				9478827C2BA638B800BDB749 /* Info.plist */,
 				947882632BA6182600BDB749 /* CampusCalApp.swift */,
 				947882652BA6182600BDB749 /* ContentView.swift */,
 				947882732BA61A9700BDB749 /* AccountView.swift */,
@@ -294,6 +296,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"CampusCal/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CampusCal/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -322,6 +325,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"CampusCal/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = CampusCal/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
