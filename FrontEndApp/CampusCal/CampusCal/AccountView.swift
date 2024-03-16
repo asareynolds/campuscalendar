@@ -10,6 +10,7 @@ import SwiftUI
 struct AccountView: View {
     @State private var colors: [Color] = [.red, .green, .blue, .yellow, .orange, .purple, .pink]
     @State private var currentColorIndex = 0
+    @Binding var hasStarted: Bool
     
     var body: some View {
         ZStack {
@@ -36,7 +37,10 @@ struct AccountView: View {
                     .frame(maxWidth: 300)
                 
                 Button(action: {
-                }) {
+                    withAnimation {
+                        hasStarted = true
+                    }
+                }, label: {
                     Text("Get Started")
                         .foregroundStyle(.white)
                         .fontWeight(.semibold)
@@ -46,13 +50,12 @@ struct AccountView: View {
                         .background(.blue)
                         .cornerRadius(10)
                         .shadow(radius: 3)
-                }
-                
+                })
             }
         }
         .ignoresSafeArea()
     }
 }
 #Preview {
-    AccountView()
+    AccountView(hasStarted: .constant(false))
 }
