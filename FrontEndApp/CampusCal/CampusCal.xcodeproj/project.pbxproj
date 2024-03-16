@@ -14,6 +14,7 @@
 		9478826D2BA6182700BDB749 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9478826C2BA6182700BDB749 /* Preview Assets.xcassets */; };
 		947882742BA61A9700BDB749 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947882732BA61A9700BDB749 /* AccountView.swift */; };
 		947882762BA61D6200BDB749 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947882752BA61D6200BDB749 /* CalendarView.swift */; };
+		947882792BA6265B00BDB749 /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 947882782BA6265B00BDB749 /* AlertToast */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				947882792BA6265B00BDB749 /* AlertToast in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,6 +94,9 @@
 			dependencies = (
 			);
 			name = CampusCal;
+			packageProductDependencies = (
+				947882782BA6265B00BDB749 /* AlertToast */,
+			);
 			productName = CampusCal;
 			productReference = 947882602BA6182600BDB749 /* CampusCal.app */;
 			productType = "com.apple.product-type.application";
@@ -120,6 +125,9 @@
 				Base,
 			);
 			mainGroup = 947882572BA6182600BDB749;
+			packageReferences = (
+				947882772BA6265B00BDB749 /* XCRemoteSwiftPackageReference "AlertToast" */,
+			);
 			productRefGroup = 947882612BA6182600BDB749 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -354,6 +362,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		947882772BA6265B00BDB749 /* XCRemoteSwiftPackageReference "AlertToast" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/elai950/AlertToast";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.3.9;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		947882782BA6265B00BDB749 /* AlertToast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 947882772BA6265B00BDB749 /* XCRemoteSwiftPackageReference "AlertToast" */;
+			productName = AlertToast;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 947882582BA6182600BDB749 /* Project object */;
 }

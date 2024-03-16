@@ -12,6 +12,7 @@ struct Event: Identifiable {
     var title: String
     var date: Date
     var color: Color
+    var description: String
 }
 
 extension Date {
@@ -21,10 +22,37 @@ extension Date {
 }
 
 let sampleEvents: [Event] = [
-    Event(title: "Meeting with Alex", date: Date(), color: .blue),
-    Event(title: "Lunch with Sam", date: Date().addingTimeInterval(3600 * 24), color: .green),
-    // Add more events...
+    Event(title: "Meeting with Alex", date: Date(), color: .blue, description: "Discuss project status."),
+    Event(title: "Lunch with Sam", date: Date().addingTimeInterval(3600 * 24), color: .green, description: "Casual lunch at the park."),
+    // Add more events with descriptions...
 ]
+
+struct EventRow: View {
+    var event: Event
+    
+    var body: some View {
+        HStack {
+            Rectangle()
+                .fill(event.color)
+                .frame(width: 5)
+                .cornerRadius(2.5)
+            
+            VStack(alignment: .leading) {
+                Text(event.title)
+                    .font(.headline)
+                Text(event.date, format: .dateTime.hour().minute())
+                    .font(.subheadline)
+                Text(event.description)
+                    .font(.caption)
+            }
+            .padding(.leading, 8)
+            
+            Spacer()
+        }
+        .padding()
+//        .background(RoundedRectangle(cornerRadius: 10).fill(Color.white).shadow(radius: 1))
+    }
+}
 
 
 struct CalendarView: View {
@@ -45,12 +73,33 @@ struct CalendarView: View {
             ForEach(sortedDates, id: \.self) { date in
                 Section {
                     ForEach(groupedEvents[date] ?? []) { event in
-                        HStack {
-                            Circle()
-                                .fill(event.color)
-                                .frame(width: 10, height: 10)
-                            Text(event.title)
-                        }
+                        EventRow(event: event)
+                            .swipeActions(edge: .leading, allowsFullSwipe: true) {
+                                Button {
+                                    print("Upvote \(event.title)")
+                                    // Implement upvote action here
+                                } label: {
+                                    Label("Upvote", systemImage: "arrow.up")
+                                }
+                                .tint(.orange)
+                                
+                                Button {
+                                    print("Downvote \(event.title)")
+                                    // Implement upvote action here
+                                } label: {
+                                    Label("Downvote", systemImage: "arrow.down")
+                                }
+                                .tint(.indigo)
+                            }
+                            .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                                Button {
+                                    print("Add \(event.title)")
+                                    // Implement add event action here Use alert toast here
+                                } label: {
+                                    Label("Add", systemImage: "plus")
+                                }
+                                .tint(.blue)
+                            }
                     }
                 } header: {
                     Text(date.formatted(date: .abbreviated, time: .omitted))
