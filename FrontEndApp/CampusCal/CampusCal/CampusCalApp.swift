@@ -25,7 +25,7 @@ struct CampusCalApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            AccountView()
         }
         .modelContainer(sharedModelContainer)
     }

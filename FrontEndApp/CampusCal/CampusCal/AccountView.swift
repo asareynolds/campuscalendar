@@ -29,33 +29,25 @@ struct AccountView: View {
             }
             
             VStack(spacing: 20) {
-                Text("Welcome")
-                    .font(.title)
+                Text("Campus Calendar")
+                    .font(.system(size:60))
+                    .padding(.bottom, 70)
                     .bold()
+                    .frame(maxWidth: 300)
                 
                 Button(action: {
-                    // Handle "Create Account" action
                 }) {
-                    Text("Create Account")
+                    Text("Get Started")
                         .foregroundStyle(.white)
                         .fontWeight(.semibold)
+                        .font(.title)
                         .padding(.horizontal, 20)
                         .padding(.vertical, 10)
                         .background(.blue)
                         .cornerRadius(10)
+                        .shadow(radius: 3)
                 }
                 
-                Button(action: {
-                    // Handle "Log In" action
-                }) {
-                    Text("Log In")
-                        .foregroundStyle(.white)
-                        .fontWeight(.semibold)
-                        .padding(.horizontal, 20)
-                        .padding(.vertical, 10)
-                        .background(.green)
-                        .cornerRadius(10)
-                }
             }
         }
         .ignoresSafeArea()
