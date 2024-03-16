@@ -2,7 +2,7 @@ const express = require('express')
 var bodyParser = require('body-parser')
 const cors = require('cors');
 const db = require('./db.js');
-var sha256 = require('js-sha256').sha256;
+var sha256 = require('js-sha256/index.js').sha256;
 
 const app = express();
 app.use(bodyParser.json())
