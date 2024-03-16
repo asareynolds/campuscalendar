@@ -10,6 +10,8 @@ import SwiftData
 
 @main
 struct CampusCalApp: App {
+    @State private var hasLaunched: Bool = false
+    
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Item.self,
@@ -25,7 +27,15 @@ struct CampusCalApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ZStack {
+                if !hasLaunched {
+                    AccountView(hasStarted: $hasLaunched)
+                }
+                else {
+                    CalendarView(events: sampleEvents)
+                }
+            }
+            .transition(.asymmetric(insertion: .move(edge: .trailing).combined(with: .opacity), removal: AnyTransition.move(edge: .leading).combined(with: .opacity)))
         }
         .modelContainer(sharedModelContainer)
     }
