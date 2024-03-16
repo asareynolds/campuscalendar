@@ -3,6 +3,8 @@ var bodyParser = require('body-parser')
 const cors = require('cors');
 const db = require('./db.js');
 const user = require('./user.js');
+//const organization = require('./organization.js');
+const event = require('./events.js');
 
 const app = express();
 app.use(bodyParser.json())
@@ -61,29 +63,43 @@ app.get('/organization/info', async(req, res) => {
 
     res.end(`{"result": "success","uuid": "${org_uuid}","name": "${getOrganizationResult.name}","owner": "${getOrganizationResult.owner}","description": "${getOrganizationResult.description}","starttime": "${getOrganizationResult.starttime}","endtime": "${getOrganizationResult.endtime}","org": "${getOrganizationResult.org}","url": "${getOrganizationResult.url}"}`);
 });
-app.get('/organization/upvote', async(req, res) => {
-    const { org_uuid } = req.query
-    res.setHeader('Content-Type', 'application/json');
-
-    var upvoteOrganizationResult = JSON.parse(await organization.upvote(org_uuid))
-    if (upvoteOrganizationResult.result == "error") return res.end(`{"result": "error","type": "${upvoteOrganizationResult.type}"}`);
-
-    res.end(`{"result": "success"}`);
-});
-app.get('/organization/downvote', async(req, res) => {
-    const { org_uuid } = req.query
-    res.setHeader('Content-Type', 'application/json');
-
-    var downvoteOrganizationResult = JSON.parse(await organization.downvote(org_uuid))
-    if (downvoteOrganizationResult.result == "error") return res.end(`{"result": "error","type": "${downvoteOrganizationResult.type}"}`);
-
-    res.end(`{"result": "success"}`);
-});
 
 app.post('/event/create', async(req, res) => {
+    const { event_name, event_org, event_description, event_starttime, event_endtime, event_university, event_url } = req.body
+    res.setHeader('Content-Type', 'application/json');
+
+    var createEventResult = JSON.parse(await event.create(event_name, event_org, event_description, event_starttime, event_endtime, event_university, event_url))
+    if (createEventResult.result == "error") return res.end(`{"result": "error","type": "${createEventResult.type}"}`);
+
+    res.end(`{"result": "success","uuid": "${createEventResult.uuid}"}`);    
 });
 app.get('/event/info', async(req, res) => { // App is sending get request: (URL args) EventID
+    const { event_uuid } = req.query
+    res.setHeader('Content-Type', 'application/json');
+
+    var getEventResult = JSON.parse(await event.getInfo(event_uuid))
+    if (getEventResult.result == "error") return res.end(`{"result": "error","type": "${getEventResult.type}"}`);
+
+    res.end(`{"result": "success","uuid": "${event_uuid}","title": "${getEventResult.title}","org": "${getEventResult.org}","description": "${getEventResult.description}","starttime": "${getEventResult.starttime}","endtime": "${getEventResult.endtime}","university": "${getEventResult.university}","url": "${getEventResult.url}","votes": "${getEventResult.votes}"}`);
 }); // App is expecting: JSON object of event
+app.get('/event/upvote', async(req, res) => { // App is sending post request: (URL args) EventID
+    const { event_uuid } = req.query
+    res.setHeader('Content-Type', 'application/json');
+
+    var upvoteResult = JSON.parse(await event.upvote(event_uuid))
+    if (upvoteResult.result == "error") return res.end(`{"result": "error","type": "${upvoteResult.type}"}`);
+
+    res.end(`{"result": "success","votes": "${upvoteResult.votes}"}`);
+});
+app.get('/event/downvote', async(req, res) => { // App is sending post request: (JSON args) EventID
+    const { event_uuid } = req.query
+    res.setHeader('Content-Type', 'application/json');
+
+    var downvoteResult = JSON.parse(await event.downvote(event_uuid))
+    if (downvoteResult.result == "error") return res.end(`{"result": "error","type": "${downvoteResult.type}"}`);
+
+    res.end(`{"result": "success","votes": "${downvoteResult.votes}"}`);
+});
 app.get('/events', async(req, res) => { // App is sending get request: (URL args) UserID, Starttime, Endtime, Organization
 }); // App is expecting: JSON array of events
 
