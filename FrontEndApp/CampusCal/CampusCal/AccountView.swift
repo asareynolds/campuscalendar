@@ -43,12 +43,13 @@ struct AccountView: View {
                     }
                 }, label: {
                     Text("Get Started")
-                        .foregroundStyle(.white)
+                        .foregroundStyle(.black)
                         .fontWeight(.semibold)
                         .font(.title)
                         .padding(.horizontal, 20)
                         .padding(.vertical, 10)
-                        .background(.blue)
+                        .background(.white)
+                        .background(.regularMaterial)
                         .cornerRadius(10)
                         .shadow(radius: 3)
                 })
