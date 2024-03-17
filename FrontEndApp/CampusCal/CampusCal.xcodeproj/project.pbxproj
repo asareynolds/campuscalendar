@@ -8,26 +8,30 @@
 
 /* Begin PBXBuildFile section */
 		947882642BA6182600BDB749 /* CampusCalApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947882632BA6182600BDB749 /* CampusCalApp.swift */; };
-		947882662BA6182600BDB749 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947882652BA6182600BDB749 /* ContentView.swift */; };
-		947882682BA6182600BDB749 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947882672BA6182600BDB749 /* Item.swift */; };
 		9478826A2BA6182700BDB749 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 947882692BA6182700BDB749 /* Assets.xcassets */; };
 		9478826D2BA6182700BDB749 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9478826C2BA6182700BDB749 /* Preview Assets.xcassets */; };
 		947882742BA61A9700BDB749 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947882732BA61A9700BDB749 /* AccountView.swift */; };
 		947882762BA61D6200BDB749 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947882752BA61D6200BDB749 /* CalendarView.swift */; };
 		947882792BA6265B00BDB749 /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 947882782BA6265B00BDB749 /* AlertToast */; };
+		947882802BA65F1900BDB749 /* InterestsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9478827F2BA65F1900BDB749 /* InterestsViewModel.swift */; };
+		947882822BA66CCC00BDB749 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947882812BA66CCC00BDB749 /* AboutView.swift */; };
+		947882842BA66D0D00BDB749 /* Swizzler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947882832BA66D0D00BDB749 /* Swizzler.swift */; };
+		94A5E8C02BA7491C00186CEF /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A5E8BF2BA7491C00186CEF /* CalendarViewModel.swift */; };
 		C8C2002D2BA6474C0009BBB1 /* CreateEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C2002C2BA6474C0009BBB1 /* CreateEventView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		947882602BA6182600BDB749 /* CampusCal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CampusCal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		947882632BA6182600BDB749 /* CampusCalApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CampusCalApp.swift; sourceTree = "<group>"; };
-		947882652BA6182600BDB749 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		947882672BA6182600BDB749 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		947882692BA6182700BDB749 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9478826C2BA6182700BDB749 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		947882732BA61A9700BDB749 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
 		947882752BA61D6200BDB749 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		9478827C2BA638B800BDB749 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		9478827F2BA65F1900BDB749 /* InterestsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestsViewModel.swift; sourceTree = "<group>"; };
+		947882812BA66CCC00BDB749 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
+		947882832BA66D0D00BDB749 /* Swizzler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Swizzler.swift; sourceTree = "<group>"; };
+		94A5E8BF2BA7491C00186CEF /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
 		C8C2002C2BA6474C0009BBB1 /* CreateEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CreateEventView.swift; path = CampusCal/CreateEventView.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -64,11 +68,13 @@
 			children = (
 				9478827C2BA638B800BDB749 /* Info.plist */,
 				947882632BA6182600BDB749 /* CampusCalApp.swift */,
-				947882652BA6182600BDB749 /* ContentView.swift */,
+				947882812BA66CCC00BDB749 /* AboutView.swift */,
+				947882832BA66D0D00BDB749 /* Swizzler.swift */,
+				9478827F2BA65F1900BDB749 /* InterestsViewModel.swift */,
 				947882732BA61A9700BDB749 /* AccountView.swift */,
 				947882752BA61D6200BDB749 /* CalendarView.swift */,
+				94A5E8BF2BA7491C00186CEF /* CalendarViewModel.swift */,
 				C8C2002C2BA6474C0009BBB1 /* CreateEventView.swift */,
-				947882672BA6182600BDB749 /* Item.swift */,
 				947882692BA6182700BDB749 /* Assets.xcassets */,
 				9478826B2BA6182700BDB749 /* Preview Content */,
 			);
@@ -160,10 +166,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				947882762BA61D6200BDB749 /* CalendarView.swift in Sources */,
+				947882822BA66CCC00BDB749 /* AboutView.swift in Sources */,
 				947882742BA61A9700BDB749 /* AccountView.swift in Sources */,
-				947882662BA6182600BDB749 /* ContentView.swift in Sources */,
+				947882842BA66D0D00BDB749 /* Swizzler.swift in Sources */,
+				947882802BA65F1900BDB749 /* InterestsViewModel.swift in Sources */,
 				C8C2002D2BA6474C0009BBB1 /* CreateEventView.swift in Sources */,
-				947882682BA6182600BDB749 /* Item.swift in Sources */,
+				94A5E8C02BA7491C00186CEF /* CalendarViewModel.swift in Sources */,
 				947882642BA6182600BDB749 /* CampusCalApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -298,6 +306,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"CampusCal/Preview Content\"";
+				DEVELOPMENT_TEAM = S5BAL69932;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CampusCal/Info.plist;
@@ -327,6 +336,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"CampusCal/Preview Content\"";
+				DEVELOPMENT_TEAM = S5BAL69932;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CampusCal/Info.plist;
