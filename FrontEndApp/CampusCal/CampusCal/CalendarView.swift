@@ -25,36 +25,65 @@ extension Date {
 }
 
 let sampleEvents: [Event] = [
-    Event(title: "Meeting with Alex", startDate: Date(), endDate: Date().addingTimeInterval(3600), color: .blue, description: "Discuss project status."),
-    Event(title: "Lunch with Sam", startDate: Date().addingTimeInterval(3600 * 24), endDate: Date().addingTimeInterval((3600 * 24) + 3600), color: .green, description: "Casual lunch at the park."),
+    Event(title: "Meeting with Alex", startDate: Date(), endDate: Date().addingTimeInterval(3600), color: .blue, description: "This event involves meeting Alex, eating food with him, and flying an airplane for the first time. Anyone is welcome."),
+    Event(title: "Lunch with Sam", startDate: Date().addingTimeInterval(3600 * 24), endDate: Date().addingTimeInterval((3600 * 24) + 3600), color: .green, description: "Casual lunch at the park. Rember to bring your rain jacket!"),
     // Add more events...
 ]
-
+struct EventInDetail: View{
+    let event: Event
+    var body: some View{
+        VStack{
+            Text(event.title)
+                .font(.largeTitle)
+            Text(event.description)
+            
+        }
+    }
+}
 struct EventRow: View {
     let event: Event
+    @State private var isExpanded = false
+    @AppStorage("customTintColor") var colorBlind =  false
     
     var body: some View {
-        return NavigationLink {
-            Text(event.description)
-        } label: {
-            HStack {
-                Rectangle()
-                    .fill(event.color)
-                    .frame(width: 5)
-                    .cornerRadius(2.5)
-                
-                VStack(alignment: .leading) {
-                    Text(event.title)
-                        .font(.headline)
-                    Text(event.startDate...event.endDate)
-                        .font(.subheadline)
+        VStack {
+            Button(action: {
+                withAnimation {
+                    self.isExpanded.toggle()
                 }
-                .padding(.leading, 8)
-                
-                Spacer()
+            }) {
+                HStack {
+                    if colorBlind {
+                        Image(systemName: "checkmark")
+                    }
+                    else{
+                        Rectangle()
+                            .fill(event.color)
+                            .frame(width: 5)
+                        .cornerRadius(2.5)}
+                    
+                    VStack(alignment: .leading) {
+                        Text(event.title)
+                            .font(.headline)
+                        Text(event.startDate...event.endDate)
+                            .font(.subheadline)
+                    }
+                    .padding(.leading, 8)
+                    
+                    Spacer()
+                }
+                .padding()
             }
-            .padding()
+            if isExpanded {
+                VStack(alignment: .leading) {
+                    Text(event.description)
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                        .padding(.leading, 16)
+                }
+            }
         }
+        .buttonStyle(PlainButtonStyle())
     }
 }
 
@@ -137,6 +166,7 @@ struct CalendarView: View {
             .sheet(isPresented: $showAddView, content: {
                 CreateEventView()
             })
+            .navigationTitle("Events")
         }
     }
 }

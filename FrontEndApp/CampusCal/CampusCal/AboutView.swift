@@ -51,6 +51,7 @@ private struct AboutRowView: View {
 struct AboutView: View {
     @AppStorage("customTintColor") private var storedColor = 0
     @State private var isShowingDialog = false
+    @AppStorage("customTintColor") var colorBlind =  false
 
     var body: some View {
         ScrollView {
@@ -87,6 +88,10 @@ struct AboutView: View {
                                 swizzleCustomTintColor()
                             })
                         }
+                        Divider().padding(.vertical, 4)
+                        Text("Color Blind Mode").foregroundStyle(.secondary)
+                        Spacer()
+                        Toggle("", isOn: $colorBlind)
                         Divider().padding(.vertical, 4)
                         HStack {
                             Text("Reset Preferences").foregroundStyle(.secondary)
