@@ -37,7 +37,7 @@ private struct EventRow: View {
             }) {
                 HStack {
                     if colorBlind {
-                        Image(systemName: "checkmark")
+                        Image(systemName: event.color == .blue ?  "building.2" : "person.fill")
                     }
                     else{
                         Rectangle()
@@ -63,6 +63,11 @@ private struct EventRow: View {
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                         .padding(.leading, 16)
+                    Link("\(event.url)", destination: event.url)
+                        .font(.subheadline)
+                        .foregroundColor(.blue)
+                        .padding()
+                
                 }
             }
         }
@@ -119,6 +124,8 @@ struct CalendarView: View {
                                                         calEvent.endDate = event.endDate
                                                         calEvent.notes = event.description
                                                         showToast = true
+                                                        try? store.save(calEvent, span: .thisEvent)
+
                                                     }
                                                 } label: {
                                                     Label("Add", systemImage: "plus")

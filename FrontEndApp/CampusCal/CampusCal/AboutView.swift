@@ -4,14 +4,10 @@
 //
 //  Created by Ryan Nair on 3/16/24.
 //
-
 import SwiftUI
-
 private struct AboutLabelView: View {
-
     let labelTitle: String
     let labelImage: String
-
     var body: some View {
         HStack {
             Text(labelTitle.uppercased())
@@ -21,13 +17,10 @@ private struct AboutLabelView: View {
         }
     }
 }
-
 private struct AboutRowView: View {
-
     let title: String
     let content: String
     var linkDestination: String?
-
     var body: some View {
         VStack {
             Divider()
@@ -47,12 +40,10 @@ private struct AboutRowView: View {
         }
     }
 }
-
 struct AboutView: View {
     @AppStorage("customTintColor") private var storedColor = 0
     @State private var isShowingDialog = false
     @AppStorage("customTintColor") var colorBlind =  false
-
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
@@ -66,7 +57,6 @@ struct AboutView: View {
                 } label: {
                     AboutLabelView(labelTitle: "CampusCal", labelImage: "info.circle")
                 }
-
                 GroupBox {
                     AboutRowView(title: "Developed by", content: "Eva Gunn, Aiden Johnson Ryan Nair, Asa Reynolds, and Jason Selsley")
                     AboutRowView(title: "GitHub", content: "Source Code", linkDestination: "https://github.com/asareynolds/campuscalendar")
@@ -89,9 +79,11 @@ struct AboutView: View {
                             })
                         }
                         Divider().padding(.vertical, 4)
-                        Text("Color Blind Mode").foregroundStyle(.secondary)
-                        Spacer()
-                        Toggle("", isOn: $colorBlind)
+                        VStack{
+                            Toggle("Color Blind  Mode", isOn: $colorBlind)
+                                .foregroundStyle(.secondary)
+                                .foregroundColor(.primary) // Resetting the toggle's foreground color to default
+                        }
                         Divider().padding(.vertical, 4)
                         HStack {
                             Text("Reset Preferences").foregroundStyle(.secondary)
@@ -118,3 +110,4 @@ struct AboutView: View {
 #Preview {
     AboutView()
 }
+
