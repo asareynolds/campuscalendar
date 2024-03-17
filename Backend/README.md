@@ -8,7 +8,7 @@ https://api.campuscal.tech/
 ```
 
 ### Authentication
-No authentication is required for accessing the endpoints.
+User token required for Authentication
 
 ### Error Handling
 Errors are returned as JSON objects with a `result` key indicating "error" and a `type` key specifying the type of error encountered.
