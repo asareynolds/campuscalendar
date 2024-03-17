@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct InterestsView: View {
-    var viewModel = InterestsViewModel()
+    var viewModel: InterestsViewModel
     
     private let layout = [GridItem(.adaptive(minimum: 118), spacing: 10)]
     
@@ -38,9 +38,6 @@ struct InterestsView: View {
 }
 
 
-    
-
-
 struct ClubsView: View {
     @State private var viewModel = InterestsViewModel()
     
@@ -49,7 +46,9 @@ struct ClubsView: View {
             VStack(spacing: 20) {
                 InterestsView(viewModel: viewModel)
                 Button("Submit") {
-
+                    Task {
+                        await viewModel.updateRecommendations()
+                    }
                 }
                 .buttonStyle(.borderedProminent)
                 .font(.title)
@@ -58,6 +57,9 @@ struct ClubsView: View {
                 .padding(.bottom, 20)
             }
             .padding()
+        }
+        .task {
+            await viewModel.getPreferences()
         }
     }
 }

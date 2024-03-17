@@ -68,12 +68,9 @@ class CalendarViewModel {
         return Date(timeIntervalSince1970: timeInterval)
     }
     
-    func listEvents(userUUID: String, tailored: Bool? = nil) async {
+    func listEvents(userUUID: String) async {
         var url = baseURL.appending(component: "events", directoryHint: .notDirectory)
         url.append(queryItems:[URLQueryItem(name: "user_uuid", value: userUUID)])
-        if let tailored {
-            url.append(queryItems:[URLQueryItem(name: "tailored", value: String(tailored))])
-        }
         let request = URLRequest(url: url)
         
         guard let data = try? await URLSession.shared.data(for: request).0 else {

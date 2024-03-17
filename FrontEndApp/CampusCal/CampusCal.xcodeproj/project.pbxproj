@@ -17,6 +17,7 @@
 		947882822BA66CCC00BDB749 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947882812BA66CCC00BDB749 /* AboutView.swift */; };
 		947882842BA66D0D00BDB749 /* Swizzler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947882832BA66D0D00BDB749 /* Swizzler.swift */; };
 		94A5E8C02BA7491C00186CEF /* CalendarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A5E8BF2BA7491C00186CEF /* CalendarViewModel.swift */; };
+		94A5E8C22BA7598B00186CEF /* InterestSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A5E8C12BA7598B00186CEF /* InterestSelectionView.swift */; };
 		C8C2002D2BA6474C0009BBB1 /* CreateEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C2002C2BA6474C0009BBB1 /* CreateEventView.swift */; };
 /* End PBXBuildFile section */
 
@@ -32,6 +33,7 @@
 		947882812BA66CCC00BDB749 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		947882832BA66D0D00BDB749 /* Swizzler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Swizzler.swift; sourceTree = "<group>"; };
 		94A5E8BF2BA7491C00186CEF /* CalendarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewModel.swift; sourceTree = "<group>"; };
+		94A5E8C12BA7598B00186CEF /* InterestSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterestSelectionView.swift; sourceTree = "<group>"; };
 		C8C2002C2BA6474C0009BBB1 /* CreateEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CreateEventView.swift; path = CampusCal/CreateEventView.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -67,6 +69,7 @@
 			isa = PBXGroup;
 			children = (
 				9478827C2BA638B800BDB749 /* Info.plist */,
+				94A5E8C12BA7598B00186CEF /* InterestSelectionView.swift */,
 				947882632BA6182600BDB749 /* CampusCalApp.swift */,
 				947882812BA66CCC00BDB749 /* AboutView.swift */,
 				947882832BA66D0D00BDB749 /* Swizzler.swift */,
@@ -171,6 +174,7 @@
 				947882842BA66D0D00BDB749 /* Swizzler.swift in Sources */,
 				947882802BA65F1900BDB749 /* InterestsViewModel.swift in Sources */,
 				C8C2002D2BA6474C0009BBB1 /* CreateEventView.swift in Sources */,
+				94A5E8C22BA7598B00186CEF /* InterestSelectionView.swift in Sources */,
 				94A5E8C02BA7491C00186CEF /* CalendarViewModel.swift in Sources */,
 				947882642BA6182600BDB749 /* CampusCalApp.swift in Sources */,
 			);

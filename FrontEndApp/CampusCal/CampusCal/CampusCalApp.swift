@@ -24,7 +24,7 @@ struct CampusCalApp: App {
                             .tabItem {
                                 Label("Message", systemImage:"bubble")
                             }
-                        CalendarView()
+                        ClubsView()
                             .tabItem {
                                 Label("Calendar", systemImage:"calendar")
                             }
