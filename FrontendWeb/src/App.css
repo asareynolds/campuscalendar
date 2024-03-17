@@ -1,0 +1,75 @@
+.app {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+.app-header {
+  background-color: #282c34;
+  color: white;
+  padding: 20px;
+}
+.event-enter {
+  opacity: 0;
+  transform: scale(0.9);
+}
+
+.event-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.event-exit {
+  opacity: 1;
+}
+
+.event-exit-active {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 300ms, transform 300ms;
+}
+.header {
+  background-color: #007bff; /* Blue background */
+  color: white; /* White text */
+  padding: 20px;
+  text-align: center;
+  font-size: 2em; /* Big letters */
+}
+.event-bar {
+  width: 5px; /* Width of the bar */
+  height: 100%; /* Full height */
+  position: absolute; /* Position it next to the card */
+  left: 0; /* Align it to the left */
+}
+
+.event-bar.user {
+  background-color: orange; /* Orange bar for user events */
+}
+
+.event-bar.official {
+  background-color: blue; /* Blue bar for official events */
+}
+.event-bar.sponsored {
+  background-color: yellow; /* Yellow bar for sponsored events */
+}
+.event {
+  background-color: #f9f9f9; /* Light grey background */
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); /* Add a box shadow */
+}
+
+.event-title {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #333; /* Dark grey color */
+}
+
+.event-time, .event-description, .event-organization, .event-type {
+  font-size: 0.9em; /* Slightly smaller font size */
+  color: #666; /* Medium grey color */
+  padding: 5px 0; /* Add some vertical padding */
+  margin: 10px 0;
+}
