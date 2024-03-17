@@ -20,11 +20,11 @@ struct CampusCalApp: App {
                         .transition(.move(edge: .leading).combined(with: .opacity))
                 } else {
                     TabView {
-                        CalendarView(events: sampleEvents)
+                        CalendarView()
                             .tabItem {
                                 Label("Message", systemImage:"bubble")
                             }
-                        CalendarView(events: sampleEvents)
+                        CalendarView()
                             .tabItem {
                                 Label("Calendar", systemImage:"calendar")
                             }

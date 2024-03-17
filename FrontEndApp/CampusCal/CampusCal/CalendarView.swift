@@ -9,41 +9,24 @@ import SwiftUI
 import AlertToast
 import EventKit
 
-struct Event: Identifiable {
-    let id = UUID()
-    let title: String
-    let startDate: Date
-    let endDate: Date
-    let color: Color
-    let description: String
-}
-
-extension Date {
-    var startOfDay: Date {
-        Calendar.current.startOfDay(for: self)
-    }
-}
-
-let sampleEvents: [Event] = [
-    Event(title: "Meeting with Alex", startDate: Date(), endDate: Date().addingTimeInterval(3600), color: .blue, description: "This event involves meeting Alex, eating food with him, and flying an airplane for the first time. Anyone is welcome."),
-    Event(title: "Lunch with Sam", startDate: Date().addingTimeInterval(3600 * 24), endDate: Date().addingTimeInterval((3600 * 24) + 3600), color: .green, description: "Casual lunch at the park. Rember to bring your rain jacket!"),
-    // Add more events...
-]
-struct EventInDetail: View{
+private struct EventInDetail: View{
     let event: Event
     var body: some View{
         VStack{
             Text(event.title)
                 .font(.largeTitle)
             Text(event.description)
-            
+            Link(destination: event.url) {
+                Text(event.url.lastPathComponent)
+            }
         }
     }
 }
-struct EventRow: View {
+
+private struct EventRow: View {
     let event: Event
     @State private var isExpanded = false
-    @AppStorage("customTintColor") var colorBlind =  false
+    @AppStorage("customTintColor") private var colorBlind =  false
     
     var body: some View {
         VStack {
@@ -83,75 +66,82 @@ struct EventRow: View {
                 }
             }
         }
-        .buttonStyle(PlainButtonStyle())
+        .buttonStyle(.plain)
     }
 }
 
-
 struct CalendarView: View {
-    var events: [Event]
     @State private var showToast: Bool = false
     @State private var showAddView: Bool = false
-    
-    private var groupedEvents: [Date: [Event]] {
-        Dictionary(grouping: events) { $0.startDate.startOfDay }
-    }
-    
-    private var sortedDates: [Date] {
-        groupedEvents.keys.sorted()
-    }
+    @State var model = CalendarViewModel()
+    let currentUser = "0b4a270e-243a-496b-9f67-4aedf50f9622"
     
     var body: some View {
         NavigationStack {
             List {
-                ForEach(sortedDates, id: \.self) { date in
-                    Section {
-                        if let events = groupedEvents[date] {
-                            ForEach(events) { event in
-                                EventRow(event: event)
-                                    .swipeActions(edge: .leading, allowsFullSwipe: true) {
-                                        Button {
-                                            print("Upvote \(event.title)")
-                                            // Implement upvote action here
-                                        } label: {
-                                            Label("Upvote", systemImage: "arrow.up")
-                                        }
-                                        .tint(.orange)
-                                        
-                                        Button {
-                                            print("Downvote \(event.title)")
-                                            // Implement upvote action here
-                                        } label: {
-                                            Label("Downvote", systemImage: "arrow.down")
-                                        }
-                                        .tint(.indigo)
-                                    }
-                                    .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                                        Button {
-                                            Task {
-                                                let store = EKEventStore()
-                                                guard try await store.requestWriteOnlyAccessToEvents() else {
-                                                    return
+                if let groupedEvents = model.groupedEvents {
+                    if !groupedEvents.isEmpty {
+                        ForEach(groupedEvents.keys.sorted(), id: \.self) { date in
+                            Section {
+                                if let events = groupedEvents[date] {
+                                    ForEach(events) { event in
+                                        EventRow(event: event)
+                                            .swipeActions(edge: .leading) {
+                                                Button {
+                                                    Task {
+                                                        await model.voteEvent(eventUUID: event.id.description, isUpvote: true)
+                                                    }
+                                                } label: {
+                                                    Label("Upvote", systemImage: "arrow.up")
                                                 }
-                                                let calEvent = EKEvent(eventStore: store)
-                                                calEvent.calendar = store.defaultCalendarForNewEvents
-                                                calEvent.title = event.title
-                                                calEvent.startDate = event.startDate
-                                                calEvent.endDate = event.endDate
-                                                calEvent.notes = event.description
-                                                showToast = true
+                                                .tint(.orange)
+                                                
+                                                Button {
+                                                    Task {
+                                                        await model.voteEvent(eventUUID: event.id.description, isUpvote: false)
+                                                    }
+                                                } label: {
+                                                    Label("Downvote", systemImage: "arrow.down")
+                                                }
+                                                .tint(.indigo)
                                             }
-                                        } label: {
-                                            Label("Add", systemImage: "plus")
-                                        }
-                                        .tint(.blue)
+                                            .swipeActions(edge: .trailing) {
+                                                Button {
+                                                    Task {
+                                                        let store = EKEventStore()
+                                                        guard try await store.requestWriteOnlyAccessToEvents() else {
+                                                            return
+                                                        }
+                                                        let calEvent = EKEvent(eventStore: store)
+                                                        calEvent.calendar = store.defaultCalendarForNewEvents
+                                                        calEvent.title = event.title
+                                                        calEvent.startDate = event.startDate
+                                                        calEvent.endDate = event.endDate
+                                                        calEvent.notes = event.description
+                                                        showToast = true
+                                                    }
+                                                } label: {
+                                                    Label("Add", systemImage: "plus")
+                                                }
+                                                .tint(.blue)
+                                            }
                                     }
+                                }
+                            } header: {
+                                Text(date.formatted(date: .abbreviated, time: .omitted))
                             }
                         }
-                    } header: {
-                        Text(date.formatted(date: .abbreviated, time: .omitted))
+                    }
+                    else {
+                        ContentUnavailableView("No Events Found", systemImage: "calendar.day.timeline.trailing")
                     }
                 }
+                else {
+                  ProgressView()
+                }
+            }
+            .task {
+                await model.listEvents(userUUID: currentUser)
             }
             .toast(isPresenting: $showToast) {
                 AlertToast(type: .systemImage("calendar.badge.checkmark", Color(uiColor: .label)), title: "Added to calendar", style: .style(backgroundColor: Color(uiColor: .systemBackground)))
@@ -172,6 +162,6 @@ struct CalendarView: View {
 }
 
 #Preview {
-    CalendarView(events: sampleEvents)
+    CalendarView()
 }
 
