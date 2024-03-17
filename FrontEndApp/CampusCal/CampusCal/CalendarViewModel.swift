@@ -95,13 +95,19 @@ class CalendarViewModel {
             case "sponsored" : .yellow
             default: .blue
             }
+            
+            var startDate = dateFromUnixTimestampString(decodedEvent.starttime)
+            var endDate = dateFromUnixTimestampString(decodedEvent.endtime)
+            if startDate >= endDate {
+                (endDate, startDate) = (startDate, endDate)
+            }
             return Event(
                 id: decodedEvent.id,
                 title: decodedEvent.title,
                 org: decodedEvent.org,
-                startDate: dateFromUnixTimestampString(decodedEvent.starttime),
-                endDate: dateFromUnixTimestampString(decodedEvent.endtime),
-                color: color, 
+                startDate: startDate,
+                endDate: endDate,
+                color: color,
                 url: decodedEvent.url,
                 votes: decodedEvent.votes,
                 description: decodedEvent.description

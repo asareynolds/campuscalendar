@@ -6,7 +6,7 @@ College is overwhelming. For many, trying to find something to do on a Friday ni
 We created a space where students can easily find and host their own events. Our app, Campus Calendar, can sort events from across the community and even provide AI-driven, personalized recommendations. Students can rate events, save them to their local calendar, and add events of their own. Ease of use, simplicity, and safety were some of our top development considerations. We supported these goals by implementing intuitive gestures, a clean design language, and clear distinctions between user-posted and official events.
 
 ## Our Technology
-We built a responsive iOS app using Swift UI. Our backend is written in Node.js, hosted on a redundant Kubernetes cluster via Oracle Cloud, and served via Cloudflare’s global CDN for speed and DDOS protection. We used Google’s Gemini LLM to parse multiformat external event data and pass JSON to our SQL database pipeline. For personalized recommendations, we used custom prompting with the GPT 3.5-Turbo API to match user preferences to a list of upcoming events and identify the most relevant results.  For our web app we made a react-native responsive app that can be run on any device and gets live data from our API server. Everything is SSL encrypted. 
+We built a responsive iOS app using Swift UI. Our backend is written in Node.js, hosted on a redundant Kubernetes cluster via Oracle Cloud, and served via Cloudflare’s global CDN for speed and DDOS protection. We used Google’s Gemini LLM to parse multiformat external event data and pass JSON to our SQL database pipeline. For personalized recommendations, we used custom prompting with the GPT 3.5-Turbo API to match user preferences to a list of upcoming events and identify the most relevant results.  For wider access, we made a React Native responsive app that can be run on any device and gets live data from our API server. Everything is SSL encrypted for security. 
 
 ## Challenges and Solutions
 This was the first hackathon for one of our developers: they had to quickly adjust to the high-pressure environment of HackPSU. Another challenge came from working together on the same files with Git. This wasn’t a perfect process, and we had a few merge conflicts that we had to fix at the last minute.
@@ -26,3 +26,7 @@ One of the most exciting parts of CampusCalendar is the scalability. We are able
 ## Open-Source Technology Used
 Express
 MySQL
+React
+AlertToast
+Swift
+
