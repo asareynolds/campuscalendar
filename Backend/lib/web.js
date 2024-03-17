@@ -75,10 +75,10 @@ app.get('/organizations', async(req, res) => { // List All Orgs
 });
 
 app.post('/event/create', async(req, res) => {
-    const { event_name, event_org, event_description, event_starttime, event_endtime, event_university, event_url } = req.body
+    const { event_name, event_org, event_description, event_starttime, event_endtime, event_university, event_url, event_type } = req.body
     res.setHeader('Content-Type', 'application/json');
 
-    var createEventResult = JSON.parse(await event.create(event_name, event_org, event_description, event_starttime, event_endtime, event_university, event_url))
+    var createEventResult = JSON.parse(await event.create(event_name, event_org, event_description, event_starttime, event_endtime, event_university, event_url, event_type))
     if (createEventResult.result == "error") return res.end(`{"result": "error","type": "${createEventResult.type}"}`);
 
     res.end(`{"result": "success","uuid": "${createEventResult.uuid}"}`);    
@@ -90,7 +90,7 @@ app.get('/event/info', async(req, res) => { // App is sending get request: (URL 
     var getEventResult = JSON.parse(await event.getInfo(event_uuid))
     if (getEventResult.result == "error") return res.end(`{"result": "error","type": "${getEventResult.type}"}`);
 
-    res.end(`{"result": "success","uuid": "${event_uuid}","title": "${getEventResult.title}","org": "${getEventResult.org}","description": "${getEventResult.description}","starttime": "${getEventResult.starttime}","endtime": "${getEventResult.endtime}","university": "${getEventResult.university}","url": "${getEventResult.url}","votes": "${getEventResult.votes}"}`);
+    res.end(`{"result": "success","uuid": "${event_uuid}","title": "${getEventResult.title}","org": "${getEventResult.org}","description": "${getEventResult.description}","starttime": "${getEventResult.starttime}","endtime": "${getEventResult.endtime}","university": "${getEventResult.university}","url": "${getEventResult.url}","votes": "${getEventResult.votes}", "type": "${getEventResult.type}"`);
 }); // App is expecting: JSON object of event
 app.get('/event/upvote', async(req, res) => { // App is sending post request: (URL args) EventID
     const { event_uuid } = req.query
@@ -116,11 +116,34 @@ app.get('/events', async(req, res) => { // App is sending get request: (URL args
 
     if (taylored) {
         var getEventsResult = await gpt.getRecommendations(user_uuid)
+
+        getEventsResult = JSON.parse(getEventsResult)
+        getEventsObj = {}
+        for (var i = 0; i < getEventsResult.length; i++) {
+            var event_id = getEventsResult[i];
+
+            var eventInfo = JSON.parse(await event.getInfo(event_id))
+
+            var eventObj = {
+                id: event_id,
+                title: eventInfo.title,
+                org: eventInfo.org,
+                description: eventInfo.description,
+                starttime: eventInfo.starttime,
+                endtime: eventInfo.endtime,
+                university: eventInfo.university,
+                url: eventInfo.url,
+                votes: eventInfo.votes,
+                type: eventInfo.type
+            }
+            getEventsObj[i] = eventObj
+        }
+
+        getEventsResult = getEventsObj
     } else {
         var getEventsResult = await event.getAll()
     }
 
-    console.log(getEventsResult)
     if (getEventsResult.result == "error") return res.end(`{"result": "error","type": "${getEventsResult.type}"}`);
 
     res.end(`{"result": "success","events": ${JSON.stringify(getEventsResult)}}`);
