@@ -17,26 +17,44 @@ struct CampusCalApp: App {
             Item.self,
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
+        
         do {
             return try ModelContainer(for: schema, configurations: [modelConfiguration])
         } catch {
             fatalError("Could not create ModelContainer: \(error)")
         }
     }()
-
+    
     var body: some Scene {
         WindowGroup {
-            ZStack {
-                if !hasLaunched {
-                    AccountView(hasStarted: $hasLaunched)
+
+                ZStack {
+                    if !hasLaunched {
+                        AccountView(hasStarted: $hasLaunched)
+                    }
+                    else {
+                        TabView{
+                            CalendarView(events: sampleEvents)
+                                .modelContainer(sharedModelContainer)
+                                .tabItem {
+                                    Label("Message", systemImage:"bubble.circle" )
+                                }
+                            if hasLaunched {
+                                CalendarView(events: sampleEvents)
+                                    .tabItem {
+                                        Label("Calendar", systemImage:"calendar.circle")
+                                    }
+                                CalendarView(events: sampleEvents)
+                                    .tabItem {
+                                        Label("Home", systemImage: "gear.circle")
+                                    }
+                                
+                            }
+                        }
+                    }
                 }
-                else {
-                    CalendarView(events: sampleEvents)
-                }
+                .transition(.asymmetric(insertion: .move(edge: .trailing).combined(with: .opacity), removal: AnyTransition.move(edge: .leading).combined(with: .opacity)))
             }
-            .transition(.asymmetric(insertion: .move(edge: .trailing).combined(with: .opacity), removal: AnyTransition.move(edge: .leading).combined(with: .opacity)))
+            .modelContainer(sharedModelContainer)
         }
-        .modelContainer(sharedModelContainer)
     }
-}
