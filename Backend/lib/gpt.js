@@ -29,10 +29,13 @@ const getRecommendations = async function(uuid) {
         events_string += `{"uuid": "${event_id.id}", "title": "${event_id.title}"},\n`;
     });
     
-    var prompt = `A student has the following preferences: {${Buffer.from(preferences.preferences, 'base64').toString('utf-8')}}
+    //var prompt = `A student has the following preferences: {${Buffer.from(preferences.preferences, 'base64').toString('utf-8')}}
+    var prompt = `A student has the following preferences: {["Science"]}
     Compare the user's preferences against the following events, and select only exactly three events that most closely match. Only return the UUIDs of the three most closely matching events. Format the UUIDs in a JSON array. The output must only be the JSON array of UUIDs or the system will fail.\nAn example of the desired output is:\n[\n"52b22807-b1bb-4bd1-86a7-f7b8de51f5c7",\n"4cbedd1a-e5f8-4489-b11e-97bc0e805c7c",\n"bf7ed67d-1deb-499d-b20d-8ec2b667e110"\n]\nThe available events are {${events_string}}`;
+
     console.log("Sending request to ChatGPT with prompt: " + prompt);
     //var response = await APIcall(prompt);
+    //console.log("ChatGPT response: " + response['content']);
     var response = `[
         "0024a63e-3cf4-45ac-b134-9754cd6fb626",
         "0b638de2-6275-4b6b-b5fe-e392aca4275d"

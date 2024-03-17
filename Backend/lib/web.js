@@ -71,6 +71,7 @@ app.get('/organizations', async(req, res) => { // List All Orgs
     var getOrgsResult = await organization.getOrgs()
     if (getOrgsResult.result == "error") return res.end(`{"result": "error","type": "${getOrgsResult.type}"}`);
 
+    console.log("Orgs result: " + JSON.stringify(getOrgsResult))
     res.end(`{"result": "success","organizations": ${JSON.stringify(getOrgsResult)}}`);
 });
 
@@ -81,6 +82,7 @@ app.post('/event/create', async(req, res) => {
     var createEventResult = JSON.parse(await event.create(event_name, event_org, event_description, event_starttime, event_endtime, event_university, event_url, event_type))
     if (createEventResult.result == "error") return res.end(`{"result": "error","type": "${createEventResult.type}"}`);
 
+    console.log("Created Event: " + JSON.stringify(createEventResult))
     res.end(`{"result": "success","uuid": "${createEventResult.uuid}"}`);    
 });
 app.get('/event/info', async(req, res) => { // App is sending get request: (URL args) EventID
@@ -90,6 +92,7 @@ app.get('/event/info', async(req, res) => { // App is sending get request: (URL 
     var getEventResult = JSON.parse(await event.getInfo(event_uuid))
     if (getEventResult.result == "error") return res.end(`{"result": "error","type": "${getEventResult.type}"}`);
 
+    console.log("Getting Event Info: " + JSON.stringify(getEventResult))
     res.end(`{"result": "success","uuid": "${event_uuid}","title": "${getEventResult.title}","org": "${getEventResult.org}","description": "${getEventResult.description}","starttime": "${getEventResult.starttime}","endtime": "${getEventResult.endtime}","university": "${getEventResult.university}","url": "${getEventResult.url}","votes": "${getEventResult.votes}", "type": "${getEventResult.type}"`);
 }); // App is expecting: JSON object of event
 app.get('/event/upvote', async(req, res) => { // App is sending post request: (URL args) EventID
@@ -99,7 +102,8 @@ app.get('/event/upvote', async(req, res) => { // App is sending post request: (U
     var upvoteResult = JSON.parse(await event.upvote(event_uuid))
     if (upvoteResult.result == "error") return res.end(`{"result": "error","type": "${upvoteResult.type}"}`);
 
-    res.end(`{"result": "success","votes": "${upvoteResult.votes}"}`);
+    console.log("Upvote result: " + upvoteResult.votes)
+    res.end(`{"result": "success","votes": ${upvoteResult.votes}}`);
 });
 app.get('/event/downvote', async(req, res) => { // App is sending post request: (JSON args) EventID
     const { event_uuid } = req.query
@@ -108,14 +112,29 @@ app.get('/event/downvote', async(req, res) => { // App is sending post request: 
     var downvoteResult = JSON.parse(await event.downvote(event_uuid))
     if (downvoteResult.result == "error") return res.end(`{"result": "error","type": "${downvoteResult.type}"}`);
 
-    res.end(`{"result": "success","votes": "${downvoteResult.votes}"}`);
+    console.log("Downvote result: " + downvoteResult.votes)
+    res.end(`{"result": "success","votes": ${downvoteResult.votes}}`);
 });
 app.get('/events', async(req, res) => { // App is sending get request: (URL args) UserID, Starttime, Endtime, Organization
     const { user_uuid, taylored } = req.query
     res.setHeader('Content-Type', 'application/json');
 
     if (taylored) {
-        var getEventsResult = JSON.parse(await gpt.getRecommendations(user_uuid))
+        try {
+            var getEventsResult = JSON.parse(await gpt.getRecommendations(user_uuid));
+        } catch (error) {
+            console.log("Error occurred:", error);
+            try {
+                getEventsResult = JSON.parse(await gpt.getRecommendations(user_uuid));
+            } catch (error) {
+                console.log("Error occurred again:", error);
+                // Handle the error or throw it to be caught by the caller
+                getEventsResult = JSON.parse(`[
+                    "0024a63e-3cf4-45ac-b134-9754cd6fb626",
+                    "0b638de2-6275-4b6b-b5fe-e392aca4275d"
+                ]`)
+            }
+        }
         
         getEventsObj = {}
         for (var i = 0; i < getEventsResult.length; i++) {
@@ -143,6 +162,7 @@ app.get('/events', async(req, res) => { // App is sending get request: (URL args
 
     if (getEventsResult.result == "error") return res.end(`{"result": "error","type": "${getEventsResult.type}"}`);
 
+    console.log("Events result: " + JSON.stringify(getEventsResult))
     res.end(`{"result": "success","events": ${JSON.stringify(getEventsResult)}}`);
 }); // App is expecting: JSON array of events
 
