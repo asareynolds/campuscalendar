@@ -10,7 +10,7 @@ import SwiftData
 
 @main
 struct CampusCalApp: App {
-    @State private var hasLaunched: Bool = false
+    @State private var hasLaunched: Bool = true
     
     var body: some Scene {
         WindowGroup {
