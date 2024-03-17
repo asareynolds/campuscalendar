@@ -115,17 +115,14 @@ app.get('/events', async(req, res) => { // App is sending get request: (URL args
     res.setHeader('Content-Type', 'application/json');
 
     if (taylored) {
-        var getEventsResult = await gpt.getRecommendations(user_uuid)
-
-        getEventsResult = JSON.parse(getEventsResult)
+        var getEventsResult = JSON.parse(await gpt.getRecommendations(user_uuid))
+        
         getEventsObj = {}
         for (var i = 0; i < getEventsResult.length; i++) {
-            var event_id = getEventsResult[i];
-
-            var eventInfo = JSON.parse(await event.getInfo(event_id))
+            var eventInfo = JSON.parse(await event.getInfo(getEventsResult[i]))
 
             var eventObj = {
-                id: event_id,
+                id: getEventsResult[i],
                 title: eventInfo.title,
                 org: eventInfo.org,
                 description: eventInfo.description,

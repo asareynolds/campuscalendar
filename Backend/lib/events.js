@@ -18,7 +18,7 @@ const getInfo = async(uuid) => {
     return new Promise(async(resolve, reject) => {
         if (await db.searchExists("events", "uuid", uuid)) {
             var events = await db.search("events", "uuid", uuid);
-            resolve(`{"result": "success","uuid": "${uuid}","title": "${events.title}","org": "${events.org}","description": "${events.description}","starttime": "${events.starttime}","endtime": "${events.endtime}","university": "${events.university}","url": "${events.url}","votes": "${events.votes}", "type": "${events.type}"`);
+            resolve(`{"result": "success","uuid": "${uuid}","title": "${events.title}","org": "${events.org}","description": "${events.description}","starttime": "${events.starttime}","endtime": "${events.endtime}","university": "${events.university}","url": "${events.url}","votes": "${events.votes}", "type": "${events.type}"}`);
         } else {
             resolve(`{"result": "error","type": "events doesn't exist"}`);
         }
