@@ -3,8 +3,9 @@ var bodyParser = require('body-parser')
 const cors = require('cors');
 const db = require('./db.js');
 const user = require('./user.js');
-//const organization = require('./organization.js');
+const organization = require('./organizations.js');
 const event = require('./events.js');
+const gpt = require('./gpt.js');
 
 const app = express();
 app.use(bodyParser.json())
@@ -19,7 +20,7 @@ app.post('/user/create', async(req, res) => { // App is sending post request: (J
     const { user_username, user_email, user_pass, user_name } = req.body
     res.setHeader('Content-Type', 'application/json');
 
-    if (!user_email.endsWith('.edu')) return res.end({"result": "error","type": "Invalid email domain"});
+    if (!user_email.endsWith('.edu')) return res.end(`{"result": "error","type": "Invalid email domain"}`);
 
     var createUserResult = JSON.parse(await user.create(user_username, user_email, user_pass, user_name ))
     if (createUserResult.result == "error") return res.end(`{"result": "error","type": "${createUserResult.type}"}`);
@@ -27,6 +28,7 @@ app.post('/user/create', async(req, res) => { // App is sending post request: (J
     res.end(`{"result": "success","uuid": "${createUserResult.uuid}"}`);
 }); // App is expecting: UserID
 app.post('/user/preferences', async(req, res) => {
+    console.log(req.body)
     const { user_uuid, user_preferences } = req.body
     res.setHeader('Content-Type', 'application/json');
 
@@ -66,7 +68,7 @@ app.get('/organization/info', async(req, res) => { // App is sending get request
 app.get('/organizations', async(req, res) => { // List All Orgs
     res.setHeader('Content-Type', 'application/json');
 
-    var getOrgsResult = JSON.parse(await organization.getOrgs())
+    var getOrgsResult = await organization.getOrgs()
     if (getOrgsResult.result == "error") return res.end(`{"result": "error","type": "${getOrgsResult.type}"}`);
 
     res.end(`{"result": "success","organizations": ${JSON.stringify(getOrgsResult)}}`);
@@ -109,15 +111,16 @@ app.get('/event/downvote', async(req, res) => { // App is sending post request: 
     res.end(`{"result": "success","votes": "${downvoteResult.votes}"}`);
 });
 app.get('/events', async(req, res) => { // App is sending get request: (URL args) UserID, Starttime, Endtime, Organization
-    const { user_uuid, event_starttime, event_endtime, event_org, taylored } = req.query
+    const { user_uuid, taylored } = req.query
     res.setHeader('Content-Type', 'application/json');
 
     if (taylored) {
-        var getEventsResult = JSON.parse(await event.getTaylored(user_uuid, event_starttime, event_endtime, event_org))
+        var getEventsResult = await gpt.getRecommendations(user_uuid)
     } else {
-        var getEventsResult = JSON.parse(await event.getAll())
+        var getEventsResult = await event.getAll()
     }
-    
+
+    console.log(getEventsResult)
     if (getEventsResult.result == "error") return res.end(`{"result": "error","type": "${getEventsResult.type}"}`);
 
     res.end(`{"result": "success","events": ${JSON.stringify(getEventsResult)}}`);

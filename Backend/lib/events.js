@@ -41,7 +41,7 @@ const downvote = async(uuid) => {
         if (await db.searchExists("events", "uuid", uuid)) {
             var events = await db.search("events", "uuid", uuid);
             var dbResult = JSON.parse(await db.update("events", "votes", events.votes - 1, "uuid", uuid));
-            if (dbResult.result == "success") resolve(`{"result": "success","votes": "${events.votes + 1}"}`);
+            if (dbResult.result == "success") resolve(`{"result": "success","votes": "${events.votes - 1}"}`);
             else resolve(`{"result": "error","type": "unknown"}`);
         } else {
             resolve(`{"result": "error","type": "events doesn't exist"}`);
@@ -50,7 +50,7 @@ const downvote = async(uuid) => {
 }
 const getAll = async() => {
     return new Promise(async(resolve, reject) => {
-        var events = await db.search("events", "1", "1");
+        var events = await db.search("events", "1", "1", true);
         var parsedEvents = {};
         for (var i = 0; i < events.length; i++) {
             var event = events[i];
@@ -65,7 +65,7 @@ const getAll = async() => {
                 url: event.url,
                 votes: event.votes
             };
-            parsedEvents.push(parsedEvent);
+            parsedEvents[i] = parsedEvent;
         }
         resolve(parsedEvents);
     });

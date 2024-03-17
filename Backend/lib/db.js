@@ -44,8 +44,19 @@ const insert = async(table, fields, values) => {
         });
     })
 }
-const search = async(table, field, query) => {
+const search = async(table, field, query, getAll = false) => {
     return new Promise(async(resolve, reject) => {
+        if (getAll) {
+            connection.query("SELECT * FROM `" + table + "`", function(error, results, fields) {
+                if (error) {
+                    console.log(error)
+                    resolve(`{"result": "error","type": "${error}"}`)
+                }
+                resolve(results)
+            });
+            return;
+        }
+        
         connection.query("SELECT * FROM `" + table + "` WHERE `" + field + "` = '" + query + "'", function(error, results, fields) {
             if (error) {
                 console.log(error)

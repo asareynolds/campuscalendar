@@ -29,7 +29,7 @@ const getInfo = async(uuid) => {
 
 const getOrgs = async() => {
     return new Promise(async(resolve, reject) => {
-        var orgs = await db.search("organizations", "1", "1");
+        var orgs = await db.search("organizations", "1", "1", true);
         var parsedOrgs = [];
         for (var i = 0; i < orgs.length; i++) {
             var org = orgs[i];
